@@ -1,4 +1,4 @@
-// Package aws this package in intention to hide aws s3 storage implementation
+// Package s3 this package in intention to hide aws s3 storage implementation
 // under the interface that will give you the ability to user other cloud providers
 // in the future
 package s3
