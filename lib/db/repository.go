@@ -1,4 +1,6 @@
-package pg
+// Package db repository wrapper for go-pg orm
+// this is intended to simplify unit testing and general code structure
+package db
 
 import (
 	"context"
