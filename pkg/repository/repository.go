@@ -26,12 +26,12 @@ type SelectOrCreator interface {
 
 // Creator interface for creating models
 type Creator interface {
-	Create(ctx context.Context, model interface{}, values ...interface{}) error
+	Create(ctx context.Context, model interface{}, values ...interface{}) (orm.Result, error)
 }
 
 // Updater updater interface for updating the model int database
 type Updater interface {
-	Update(ctx context.Context, model interface{}, modifier func(*orm.Query) *orm.Query, fields ...interface{}) error
+	Update(ctx context.Context, model interface{}, modifier func(*orm.Query) *orm.Query, fields ...interface{}) (orm.Result, error)
 }
 
 // Finder find model inside the repo
@@ -41,7 +41,7 @@ type Finder interface {
 
 // Deleter delete model from the repo
 type Deleter interface {
-	Delete(ctx context.Context, model interface{}, modifier func(*orm.Query) *orm.Query, values ...interface{}) error
+	Delete(ctx context.Context, model interface{}, modifier func(*orm.Query) *orm.Query, values ...interface{}) (orm.Result, error)
 }
 
 // Transactor run set of operations in transaction
@@ -51,5 +51,5 @@ type Transactor interface {
 
 // Executor execute db query
 type Executor interface {
-	Exec(ctx context.Context, query string, params ...interface{}) error
+	Exec(ctx context.Context, query string, params ...interface{}) (orm.Result, error)
 }
