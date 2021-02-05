@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/protsack-stephan/dev-toolkit/pkg/storage"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,9 +19,14 @@ const storageTestWalkPath = "testwalk.txt"
 var storageTestExpire = time.Second * 1
 var storageTestData = []byte("hello storage")
 
+func testStorage(storage storage.Storage) error {
+	return nil
+}
+
 func TestStorage(t *testing.T) {
 	store := NewStorage(storageTestVol)
 	assert := assert.New(t)
+	assert.Nil(testStorage(store))
 
 	t.Run("walk path", func(t *testing.T) {
 		assert.NoError(store.Walk("/", func(path string) {
@@ -37,6 +43,12 @@ func TestStorage(t *testing.T) {
 
 	t.Run("put file", func(t *testing.T) {
 		assert.NoError(store.Put(storageTestPath, bytes.NewReader(storageTestData)))
+	})
+
+	t.Run("stat file", func(t *testing.T) {
+		info, err := store.Stat(storageTestPath)
+		assert.NoError(err)
+		assert.NotZero(info.Size())
 	})
 
 	t.Run("get file", func(t *testing.T) {

@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	s3manager "github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/protsack-stephan/dev-toolkit/pkg/storage"
 )
 
 const maxUploadParts = 20000
@@ -98,4 +99,18 @@ func (s *Storage) Delete(path string) error {
 	})
 
 	return err
+}
+
+// Stat get object info
+func (s *Storage) Stat(path string) (storage.FileInfo, error) {
+	out, err := s.s3.HeadObject(&s3.HeadObjectInput{
+		Bucket: aws.String(s.bucket),
+		Key:    aws.String(path),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &FileInfo{*out.ContentLength}, nil
 }

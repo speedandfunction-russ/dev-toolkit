@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/karrick/godirwalk"
+	"github.com/protsack-stephan/dev-toolkit/pkg/storage"
 )
 
 // ErrEmptyPath method call with empty file path
@@ -138,6 +139,23 @@ func (s *Storage) Delete(path string) error {
 	}
 
 	return os.Remove(loc)
+}
+
+// Stat ge file information
+func (s Storage) Stat(path string) (storage.FileInfo, error) {
+	loc, err := s.fullPath(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	info, err := os.Stat(loc)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return info, err
 }
 
 func (s Storage) fullPath(path string) (string, error) {
