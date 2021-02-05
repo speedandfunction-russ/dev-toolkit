@@ -13,6 +13,7 @@ type Storage interface {
 	Putter
 	Linker
 	Deleter
+	Stater
 }
 
 // Walker recursively look for files in directory
@@ -43,4 +44,9 @@ type Linker interface {
 // Deleter delete object from storage
 type Deleter interface {
 	Delete(path string) error
+}
+
+// Stater get information about the file
+type Stater interface {
+	Stat(path string) (FileInfo, error)
 }

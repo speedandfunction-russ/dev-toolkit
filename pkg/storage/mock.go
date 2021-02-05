@@ -44,3 +44,16 @@ func (Mock) Link(path string, expire time.Duration) (string, error) {
 func (Mock) Delete(path string) error {
 	return nil
 }
+
+// Stat get object info
+func (Mock) Stat(path string) (FileInfo, error) {
+	return new(FileInfoMock), nil
+}
+
+// FileInfoMock mock for file information
+type FileInfoMock struct{}
+
+// Size get file info size
+func (FileInfoMock) Size() int64 {
+	return 0
+}
