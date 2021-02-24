@@ -41,6 +41,9 @@ func (s Storage) List(path string) ([]string, error) {
 
 	dir := fmt.Sprintf("%s%s", s.vol, strings.TrimPrefix(path, "/"))
 	d, err := os.Open(dir)
+	if err != nil {
+		return []string{}, err
+	}
 	defer d.Close()
 	names, err := d.Readdirnames(-1)
 	return names, err
