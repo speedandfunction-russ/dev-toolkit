@@ -59,13 +59,11 @@ func (s *Storage) List(path string) ([]string, error) {
 		if len(p) == 1 {
 			// It's a file
 			result = append(result, *object.Key)
-		} else {
+		} else if result[len(p)-1] != p[0] {
 			// It's a folder
-			// Check whether it is not added yet
-			// The result is sorted so the same name should appear last in the result
-			if result[len(p)-1] != p[0] {
-				result = append(result, p[0])
-			}
+			// And it is not added yet
+			// res.Contents is sorted so if p[0] is not unique it would appear last in the result
+			result = append(result, p[0])
 		}
 	}
 

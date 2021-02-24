@@ -39,7 +39,10 @@ type Storage struct {
 func (s Storage) List(path string) ([]string, error) {
 	var err error
 
-	dir := fmt.Sprintf("%s%s", s.vol, strings.TrimPrefix(path, "/"))
+	dir, err := s.fullPath(path)
+	if err != nil {
+		return []string{}, err
+	}
 	d, err := os.Open(dir)
 	if err != nil {
 		return []string{}, err
