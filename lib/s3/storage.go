@@ -6,6 +6,7 @@ package s3
 import (
 	"errors"
 	"io"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -35,6 +36,40 @@ type Storage struct {
 	bucket   string
 	uploader *s3manager.Uploader
 	s3       *s3.S3
+}
+
+// List reads the path content
+// Note: it is not better performant than Walk because it still
+// itterates over all objects in a path
+func (s *Storage) List(path string) ([]string, error) {
+	var result []string
+	res, err := s.s3.ListObjects(&s3.ListObjectsInput{
+		Bucket: aws.String(s.bucket),
+		Prefix: aws.String(path),
+	})
+
+	if err != nil {
+		return result, err
+	}
+
+	for _, object := range res.Contents {
+		// Check whether the object is nested in a path
+		p := strings.Split(*object.Key, "/")
+
+		if len(p) == 1 {
+			// It's a file
+			result = append(result, *object.Key)
+		} else {
+			// It's a folder
+			// Check whether it is not added yet
+			// The result is sorted so the same name should appear last in the result
+			if result[len(p)-1] != p[0] {
+				result = append(result, p[0])
+			}
+		}
+	}
+
+	return result, nil
 }
 
 // Walk recursively look for files in directory

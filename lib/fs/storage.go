@@ -35,6 +35,17 @@ type Storage struct {
 	vol string
 }
 
+// List reads the path content
+func (s Storage) List(path string) ([]string, error) {
+	var err error
+
+	dir := fmt.Sprintf("%s%s", s.vol, strings.TrimPrefix(path, "/"))
+	d, err := os.Open(dir)
+	defer d.Close()
+	names, err := d.Readdirnames(-1)
+	return names, err
+}
+
 // Walk recursively look for files in directory
 func (s Storage) Walk(path string, callback func(path string)) error {
 	loc, err := s.fullPath(path)
