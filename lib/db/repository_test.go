@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-pg/pg/v10"
-	"github.com/protsack-stephan/dev-toolkit/pkg/repository"
+	"github.com/speedandfunction-russ/dev-toolkit/pkg/repository"
 	"github.com/stretchr/testify/assert"
 )
 

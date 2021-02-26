@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/protsack-stephan/dev-toolkit/pkg/storage"
+	"github.com/speedandfunction-russ/dev-toolkit/pkg/storage"
 	"github.com/stretchr/testify/assert"
 )
 

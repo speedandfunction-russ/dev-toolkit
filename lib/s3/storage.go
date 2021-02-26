@@ -13,7 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	s3manager "github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/protsack-stephan/dev-toolkit/pkg/storage"
+	"github.com/speedandfunction-russ/dev-toolkit/pkg/storage"
 )
 
 const maxUploadParts = 20000
