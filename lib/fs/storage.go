@@ -37,19 +37,18 @@ type Storage struct {
 
 // List reads the path content
 func (s Storage) List(path string) ([]string, error) {
-	var err error
-
 	dir, err := s.fullPath(path)
 	if err != nil {
 		return []string{}, err
 	}
+
 	d, err := os.Open(dir)
 	if err != nil {
 		return []string{}, err
 	}
 	defer d.Close()
-	names, err := d.Readdirnames(-1)
-	return names, err
+
+	return d.Readdirnames(-1)
 }
 
 // Walk recursively look for files in directory
