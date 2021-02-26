@@ -1,4 +1,4 @@
-module github.com/protsack-stephan/dev-toolkit
+module github.com/speedandfunction-russ/dev-toolkit
 
 go 1.15
 
